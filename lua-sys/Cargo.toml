@@ -1,0 +1,22 @@
+[package]
+name = "lua-sys"
+version = "0.1.0"
+license = "MPL-2.0"
+description = "Raw FFI bindings to Lua."
+keywords = ["lua", "ffi", "bindings"]
+authors = ["Severen Redwood <severen@shrike.me>"]
+build = "build.rs"
+
+#readme = "README.adoc"
+homepage = "https://github.com/SShrike/moon/tree/master/lua-sys"
+documentation = "https://docs.rs/lua-sys"
+
+[dependencies]
+libc = "^0.2.0"
+
+[build-dependencies]
+metadeps = "^1.1.0"
+bindgen = { version = "^0.21.0", default-features = false }
+
+[package.metadata.pkg-config]
+lua = "5.0"
