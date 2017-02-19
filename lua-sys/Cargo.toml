@@ -19,4 +19,5 @@ metadeps = "^1.1.0"
 bindgen = { version = "^0.21.0", default-features = false }
 
 [package.metadata.pkg-config]
-lua = "5.0"
+# https://www.lua.org/versions.html#numbering
+lua = "5.3"
