@@ -1,5 +1,5 @@
 extern crate metadeps;
-extern crate bindgen;
+#[cfg(feature = "compile-time")] extern crate bindgen;
 
 use std::env;
 use std::path::PathBuf;
@@ -7,6 +7,11 @@ use std::path::PathBuf;
 fn main() {
     metadeps::probe().unwrap();
 
+    #[cfg(feature = "compile-time")] generate_bindings();
+}
+
+#[cfg(feature = "compile-time")]
+fn generate_bindings() {
     // Configure and generate the bindings.
     let bindings = bindgen::Builder::default()
         .header("src/wrapper.h")

@@ -15,62 +15,66 @@ extern crate libc;
 use std::{default, ptr};
 use libc::{c_int, c_longlong, c_char};
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+#[cfg(not(feature = "compile-time"))] include!(concat!("bindings.rs"));
+#[cfg(feature = "compile-time")] include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 // Manual Bindings
 
 // Functions from lua.h //
-// #define lua_tonumber(L,i) lua_tonumberx(L,(i),NULL)
+
 #[inline(always)]
 pub unsafe fn lua_tonumber(L: *mut lua_State, i: c_int) -> f64 {
     lua_tonumberx(L, i, ptr::null_mut())
 }
 
-// #define lua_tointeger(L,i) lua_tointegerx(L,(i),NULL)
 #[inline(always)]
 pub unsafe fn lua_tointeger(L: *mut lua_State, i: c_int) -> c_longlong {
     lua_tointegerx(L, i, ptr::null_mut())
 }
 
-// #define lua_tostring(L,i) lua_tolstring(L, (i), NULL)
 #[inline(always)]
 pub unsafe fn lua_tostring(L: *mut lua_State, i: c_int) -> *const c_char {
     lua_tolstring(L, i, ptr::null_mut())
 }
 
-// #define lua_pop(L,n) lua_settop(L, -(n)-1)
 #[inline(always)]
 pub unsafe fn lua_pop(L: *mut lua_State, n: c_int) {
     lua_settop(L, -(n)-1);
 }
 
-// #define lua_newtable(L) lua_createtable(L, 0, 0)
 #[inline(always)]
 pub unsafe fn lua_newtable(L: *mut lua_State) {
     lua_createtable(L, 0, 0);
 }
 
-// #define lua_register(L,n,f) (lua_pushcfunction(L, (f)), lua_setglobal(L, (n)))
 #[inline(always)]
 pub unsafe fn lua_register(L: *mut lua_State, n: *const c_char, f: lua_CFunction) {
     lua_pushcfunction(L, f);
     lua_setglobal(L, n);
 }
 
-// #define lua_pushcfunction(L,f) lua_pushcclosure(L, (f), 0)
 #[inline(always)]
 pub unsafe fn lua_pushcfunction(L: *mut lua_State, f: lua_CFunction) {
     lua_pushcclosure(L, f, 0);
 }
 
-// #define lua_pushglobaltable(L) ((void)lua_rawgeti(L, LUA_REGISTRYINDEX, LUA_RIDX_GLOBALS))
 #[inline(always)]
 pub unsafe fn lua_pushglobaltable(L: *mut lua_State) {
     lua_rawgeti(L, LUA_REGISTRYINDEX, LUA_RIDX_GLOBALS as i64);
 }
 
+#[inline(always)]
+pub unsafe fn lua_call(L: *mut lua_State, nargs: c_int, nresults: c_int) {
+    lua_callk(L, nargs, nresults, 0, None)
+}
+
+#[inline(always)]
+pub unsafe fn lua_pcall(L: *mut lua_State, nargs: c_int, nresults: c_int, errfunc: c_int) -> c_int {
+    lua_pcallk(L, nargs, nresults, errfunc, 0, None)
+}
+
 // Functions from lauxlib.h //
-// #define luaL_loadfile(L,f) luaL_loadfilex(L,f,NULL)
+
 #[inline(always)]
 pub unsafe fn luaL_loadfile(L: *mut lua_State, f: *const c_char) -> c_int {
     luaL_loadfilex(L, f, ptr::null())
@@ -92,7 +96,7 @@ impl default::Default for lua_Debug {
             isvararg: 0,
             istailcall: 0,
             short_src: [0; 60],
-            i_ci: &mut lua_Debug_CallInfo([0; 0]),
+            i_ci: &mut CallInfo { _address: 0 },
         }
     }
 }

@@ -16,8 +16,12 @@ libc = "^0.2.0"
 
 [build-dependencies]
 metadeps = "^1.1.0"
-bindgen = { version = "^0.21.0", default-features = false }
+bindgen = { version = "^0.22.0", optional = true }
 
 [package.metadata.pkg-config]
 # https://www.lua.org/versions.html#numbering
 lua = "5.3"
+
+[features]
+default = ["compile-time"]
+compile-time = ["bindgen"] # Generate the bindings at compile time.
