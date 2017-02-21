@@ -3,4 +3,4 @@ Severen Redwood <severen@shrike.me>
 
 High level Lua (or LuaJIT) bindings.
 
-Also included in this repository are low level bindings to Lua and LuaJIT.
+Also included in this repository are raw bindings to Lua and LuaJIT.

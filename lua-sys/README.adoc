@@ -1,0 +1,4 @@
+= lua-sys
+Severen Redwood <severen@shrike.me>
+
+Raw FFI bindings to Lua. You can find the documentation https://docs.rs/lua-sys[here].

@@ -2,8 +2,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-//! Raw bindings to [Lua](https://www.lua.org/). For higher level Lua(JIT) bindings, see
-//! [Moon](https://github.com/SShrike/moon).
+//! Raw bindings to [Lua](https://www.lua.org/). For higher level Lua(JIT)
+//! bindings, see [Moon](https://github.com/SShrike/moon).
 
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
