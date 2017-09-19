@@ -1,6 +1,8 @@
 = Moon
 Severen Redwood <severen@shrike.me>
 
+***THIS PROJECT IS ABANDONED:*** https://github.com/chucklefish/rlua:[rlua] suits my needs and has more developers behind it than this project would ever have. If anyone wants to pick this/and or the crate names feel free to send me a message.
+
 High level Lua (or LuaJIT) bindings.
 
 Also included in this repository are raw bindings to Lua and LuaJIT.
